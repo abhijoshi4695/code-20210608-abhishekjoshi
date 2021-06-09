@@ -10,10 +10,10 @@ function bmiCalculator(file_path) {
 
   jsonParser.on("data", ({ key, value }) => {
     if(value.WeightKg == '' || value.HeightCm == '') {
-      console.log("Height/Weight cannot be blank");
+      console.log(key, "Height/Weight cannot be blank or zero");
     }
-    else if (value.WeightKg == 0 || value.HeightCm == 0) {
-      console.log(key, "Height/Weight cannot be zero");
+    else if (value.WeightKg < 0 || value.HeightCm < 0) {
+      console.log(key, "Height/Weight cannot be negative");
     } else {
       const HeightM = value.HeightCm / 100;
       const bmi =
