@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/abhijoshi4695/code-20210608-abhishekjoshi#readme",
   "dependencies": {
-    "express": "^4.17.1",
     "stream-json": "^1.7.1"
   }
 }
