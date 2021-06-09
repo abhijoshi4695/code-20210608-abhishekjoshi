@@ -1,0 +1,23 @@
+{
+  "name": "code-20210608-abhishekjoshi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhijoshi4695/code-20210608-abhishekjoshi.git"
+  },
+  "author": "Abhishek Joshi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abhijoshi4695/code-20210608-abhishekjoshi/issues"
+  },
+  "homepage": "https://github.com/abhijoshi4695/code-20210608-abhishekjoshi#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "stream-json": "^1.7.1"
+  }
+}
