@@ -4,6 +4,7 @@ const fs = require('fs');
 const jsonParser = StreamArray.withParser();
 
 fs.createReadStream('input.json').pipe(jsonParser.input);
+let overweightCount = 0;
 
 jsonParser.on('data', ({key, value}) => {
   if(value.WeightKg == 0 || value.HeightCm == 0) {
@@ -18,7 +19,8 @@ jsonParser.on('data', ({key, value}) => {
 });
 
 jsonParser.on('end', () => {
-    console.log('Completed parsing file');
+    console.log('Completed parsing file\n');
+    console.log('Count of persons categorized as overweight:' + overweightCount + '\n');
 });
 
 function getCategoryAndRisk(bmiVal) {
@@ -31,6 +33,7 @@ function getCategoryAndRisk(bmiVal) {
   }
   else if(bmiVal > 24.9 && bmiVal <= 29.9) {
     i = 2;
+    overweightCount++;
   }
   else if(bmiVal > 29.9 && bmiVal <= 34.9) {
     i = 3;
