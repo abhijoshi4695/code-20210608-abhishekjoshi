@@ -3,10 +3,13 @@ const fs = require("fs");
 
 let overweightCount = 0;
 
-function bmiCalculator(file_path) {
+function bmiCalculator(input_file, output_file) {
   const jsonParser = StreamArray.withParser();
+  let firstWrite = true;
 
-  fs.createReadStream(file_path).pipe(jsonParser.input);
+  fs.createReadStream(input_file).pipe(jsonParser.input);
+  let writeStream = fs.createWriteStream(output_file);
+  writeStream.write('[\n');
 
   jsonParser.on("data", ({ key, value }) => {
     if(value.WeightKg == '' || value.HeightCm == '') {
@@ -28,10 +31,30 @@ function bmiCalculator(file_path) {
         '"' + categoryAndRisk.category + '"',
         '"' + categoryAndRisk.healthRisk + '"'
       );
+      let writeObj = {
+        "Gender": "Male",
+        "HeightCm": 171,
+        "WeightKg": 96,
+        "BMI": bmi,
+        "Category": categoryAndRisk.category,
+        "HealthRisk": categoryAndRisk.healthRisk
+      }
+      if(firstWrite) {
+        writeStream.write(JSON.stringify(writeObj));
+        firstWrite = false;
+      }
+      else {
+        writeStream.write(",\n" + JSON.stringify(writeObj));
+      }
     }
   });
 
   jsonParser.on("end", () => {
+    writeStream.write('\n]');
+    writeStream.on('finish', () => {
+      console.log("Completed writing to file " + output_file + "\n");
+    });
+    writeStream.end();
     console.log("Completed parsing file\n");
     console.log(
       "Count of persons categorized as overweight:" + overweightCount + "\n"
@@ -77,4 +100,4 @@ function getCategoryAndRisk(bmiVal) {
   };
 }
 
-bmiCalculator('input.json');
+bmiCalculator('generated.json', 'out.json');
